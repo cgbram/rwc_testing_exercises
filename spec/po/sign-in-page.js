@@ -1,19 +1,39 @@
-function SignInPage (){}
-
-SignInPage.prototype.open = function(url){
-    browser.get(url);
+var config = {
+    appUrl: 'http://oasp-ci.cloudapp.net/oasp4j-sample/jsclient/#/main/sign-in',
+    userNameModel: 'credentials.username',
+    passwordModel: 'credentials.password',
+    signInButtonText: 'Sign In',
+    signOutButtonText: 'Log off'
 };
 
-SignInPage.prototype.enterUserName = function(text){
-    element(by.model('credentials.username')).sendKeys(text);
+function SignInPage() {
+}
+
+SignInPage.prototype.open = function () {
+    browser.get(config.appUrl);
 };
 
-SignInPage.prototype.enterPassword = function(pass){
-    element(by.model('credentials.password')).sendKeys(pass);
+SignInPage.prototype.enterUserName = function (text) {
+    element(by.model(config.userNameModel)).sendKeys(text);
 };
 
-SignInPage.prototype.signIn = function(){
-    element(by.buttonText('Sign In')).click();
+SignInPage.prototype.enterPassword = function (pass) {
+    element(by.model(config.passwordModel)).sendKeys(pass);
+};
+
+SignInPage.prototype.clickSignInButton = function () {
+    element(by.buttonText(config.signInButtonText)).click();
+};
+
+SignInPage.prototype.signIn = function(userName, pass){
+    this.open();
+    this.enterUserName(userName);
+    this.enterPassword(pass);
+    this.clickSignInButton();
+};
+
+SignInPage.prototype.signOut = function(){
+    element(by.buttonText(config.signOutButtonText)).click();
 };
 
 module.exports = SignInPage;
