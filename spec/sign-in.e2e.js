@@ -1,10 +1,19 @@
+var SignInPage = require('./po/sign-in-page');
+
 describe('sign in page', function () {
 
+    var signInPage;
+
+    beforeEach(function(){
+        signInPage = new SignInPage();
+    });
+
     it('should open sign in page, enter credentials and sign in', function() {
-        browser.get('http://oasp-ci.cloudapp.net/oasp4j-sample/jsclient/#/main/sign-in');
-        element(by.model('credentials.username')).sendKeys('waiter');
-        element(by.model('credentials.password')).sendKeys('waiter');
-        element(by.buttonText('Sign In')).click();
+
+        signInPage.open('http://oasp-ci.cloudapp.net/oasp4j-sample/jsclient/#/main/sign-in');
+        signInPage.enterUserName('waiter');
+        signInPage.enterPassword('waiter');
+        signInPage.signIn();
 
         browser.wait(function() {
             return browser.getCurrentUrl().then(function(url) {
