@@ -1,9 +1,9 @@
-angular.module('app').factory('secondSampleService', function($http){
+angular.module('app').factory('secondSampleService', function(sampleService){
     'use strict';
 
     return {
         getData: function(){
-            return $http.get('someUrl');
+            return sampleService.getData();
         }
     };
 

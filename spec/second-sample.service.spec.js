@@ -1,22 +1,31 @@
 describe('secondSampleService tests', function(){
     'use strict';
 
-    var secondSampleService, $httpBackend;
+    var secondSampleService, serviceMock = {
+        getData: function(){
+            return [1,2,3];
+        }
+    };
 
-    beforeEach(module('app'));
-    beforeEach(inject(function(_secondSampleService_, _$httpBackend_){
+    beforeEach(function(){
+        module('app');
+        module(function($provide){
+            $provide.value('sampleService', serviceMock);
+        });
+    });
+    beforeEach(inject(function(_secondSampleService_){
         secondSampleService = _secondSampleService_;
-        $httpBackend = _$httpBackend_;
     }));
 
     it('should get data', function(){
         // given
-        $httpBackend.whenGET('someUrl').respond([1,2,3]);
+        var data = [];
         // when
-        secondSampleService.getData();
-        $httpBackend.flush();
+        data = secondSampleService.getData();
         // then
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
+        expect(data.length).toBe(3);
+        expect(data[0]).toBe(1);
+        expect(data[1]).toBe(2);
+        expect(data[2]).toBe(3);
     });
 });
