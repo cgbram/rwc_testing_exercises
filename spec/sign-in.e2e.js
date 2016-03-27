@@ -8,16 +8,12 @@ describe('sign in page', function () {
         signInPage = new SignInPage();
     });
 
-    afterEach(function(){
-       signInPage.signOut();
-    });
-
     it('should open sign in page, enter credentials and sign in', function() {
 
-        signInPage.open();
+        signInPage.open('http://oasp-ci.cloudapp.net/oasp4j-sample/jsclient/#/main/sign-in');
         signInPage.enterUserName('waiter');
         signInPage.enterPassword('waiter');
-        signInPage.clickSignInButton();
+        signInPage.signIn();
 
         browser.wait(function() {
             return browser.getCurrentUrl().then(function(url) {
